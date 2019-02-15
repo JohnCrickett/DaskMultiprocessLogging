@@ -7,6 +7,7 @@ from dask import compute, delayed
 from dask.distributed import Client
 
 import logging
+from logging.config import fileConfig
 import logging.handlers
 import multiprocessing
 
@@ -31,13 +32,15 @@ MESSAGES = [
 
 def configure_logging():
     """
-    Configures the logger, in this example setting only the format.
-
-    In a production system this could be used to read a log config file and do
-    more detailed configuration.
+    Configures the logger.
     """
-    log_format = '%(asctime)s %(name)s %(levelname)-8s %(message)s'
-    logging.basicConfig(format=log_format)
+        if path.exists('logging.conf'):
+        fileConfig('logging.conf',
+                   disable_existing_loggers=False,
+                   defaults={'logfile_name': 'loggingdemo.log'})
+    else:
+        log_format = '%(asctime)s %(name)s %(levelname)-8s %(message)s'
+        logging.basicConfig(format=log_format)
 
 
 def worker_logging_configurer(queue):
