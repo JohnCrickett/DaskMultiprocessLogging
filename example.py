@@ -34,7 +34,7 @@ def configure_logging():
     """
     Configures the logger.
     """
-        if path.exists('logging.conf'):
+    if path.exists('logging.conf'):
         fileConfig('logging.conf',
                    disable_existing_loggers=False,
                    defaults={'logfile_name': 'loggingdemo.log'})
